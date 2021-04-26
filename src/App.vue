@@ -1,20 +1,23 @@
 <template>
-<TheHeader></TheHeader>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <TheHeader></TheHeader>
+  <ThePage></ThePage>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <HelloWorld msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import TheHeader from './components/TheHeader.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import TheHeader from "./components/TheHeader.vue";
+import ThePage from "./components/ThePage.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     HelloWorld,
-    TheHeader
-  }
-}
+    TheHeader,
+    ThePage,
+  },
+};
 </script>
 
 <style>
@@ -24,6 +27,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  
 }
 </style>
