@@ -1,11 +1,12 @@
 <template>
-  <div>{{ currentDate }}</div>
+  <div class="country">{{ country }}</div>
+  <div class="date">{{ currentDate }}</div>
 </template>
 
 <script>
 export default {
   name: "CurrentDate",
-  props: [],
+  props: ["country"],
   data: function () {
     return {
       currentDate: "",
@@ -34,4 +35,11 @@ export default {
 </script>
 
 <style>
+* {
+  border: 1px solid red;
+}
+.country,
+.date {
+  padding: 1rem;
+}
 </style>
