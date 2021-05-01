@@ -4,7 +4,7 @@
     <div class="main">
       <MainInformation
         title="Cases"
-        count=""
+        v-bind:count="casesCount"
         total=""
         class="main-child"
       ></MainInformation>
@@ -35,12 +35,31 @@ export default {
   },
   methods: {
     onSelectedCountry(country) {
+      this.casesCount = 0;
       this.country = country;
+      //if country is empty don't do the fetch
+      if (this.country !== "") {
+        fetch(
+          `https://api.covid19api.com/country/${country}/status/deaths?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.length === 0) {
+              this.casesCount = "n/a";
+            } else {
+              this.casesCount = data[0].Cases;
+              console.log(this.country, this.casesCount);
+            }
+          });
+      }
     },
   },
   data: function () {
     return {
       country: "",
+      casesCount: 0,
     };
   },
 };
