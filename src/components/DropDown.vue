@@ -14,8 +14,10 @@
     </option>
   </select>
 
-  <div class="button">
-    <button @click="onClick" type="button" class="btn">Clear country</button>
+  <div class="reset-container">
+    <button @click="onClick" type="button" class="reset-container-btn">
+      Clear country
+    </button>
   </div>
 </template>
 
@@ -56,4 +58,5 @@ export default {
 
 
 <style>
+/* style hoover btn border box shadow */
 </style>

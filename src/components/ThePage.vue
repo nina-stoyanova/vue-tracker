@@ -13,6 +13,7 @@
         count=""
         total=""
         class="main-child"
+        isDeaths="true"
       ></MainInformation>
     </div>
     <DropDown @selectedCountry="onSelectedCountry"></DropDown>
