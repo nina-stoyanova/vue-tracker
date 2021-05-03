@@ -23,6 +23,7 @@ export default {
       return new Promise((resolve) => setTimeout(() => resolve(42), 3000));
     },
   },
+
   mounted() {
     //this.getPromise().then(result => console.log(result));
     fetch("https://www.boredapi.com/api/activity")

@@ -4,6 +4,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "CurrentDate",
   props: ["country"],
@@ -13,10 +15,15 @@ export default {
     };
   },
   created() {
-    setInterval(this.getNow, 1000);
+    this.getNow();
+    this.currentDate = this.getCurrentDateTime();
+    //setInterval(this.getNow, 1000);
   },
 
   methods: {
+    getCurrentDateTime() {
+      return moment().format("MMMM Do YYYY HH:mm:ss"); //format string
+    },
     getNow: function () {
       const today = new Date();
       const date =
@@ -41,5 +48,10 @@ export default {
 .country,
 .date {
   padding: 1rem;
+  color: black;
+}
+.country {
+  font-weight: bold;
+  text-transform: capitalize;
 }
 </style>
