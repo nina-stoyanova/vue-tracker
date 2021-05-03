@@ -10,7 +10,7 @@
       ></MainInformation>
       <MainInformation
         title="Deaths"
-        count=""
+        v-bind:count="deathsCount"
         total=""
         class="main-child"
         isDeaths="true"
@@ -37,11 +37,12 @@ export default {
   methods: {
     onSelectedCountry(country) {
       this.casesCount = 0;
+      this.deathsCount = 0;
       this.country = country;
       //if country is empty don't do the fetch
       if (this.country !== "") {
         fetch(
-          `https://api.covid19api.com/country/${country}/status/deaths?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
+          `https://api.covid19api.com/country/${country}/status/confirmed?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
         )
           .then((response) => {
             return response.json();
@@ -54,6 +55,21 @@ export default {
               console.log(this.country, this.casesCount);
             }
           });
+
+        fetch(
+          `https://api.covid19api.com/country/${country}/status/deaths?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((answer) => {
+            if (answer.length === 0) {
+              this.deathsCount = "n/a";
+            } else {
+              this.deathsCount = answer[0].Cases;
+              console.log(this.country, this.deathsCount);
+            }
+          });
       }
     },
   },
@@ -61,6 +77,7 @@ export default {
     return {
       country: "",
       casesCount: 0,
+      deathsCount: 0,
     };
   },
 };
