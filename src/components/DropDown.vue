@@ -34,7 +34,14 @@ export default {
       selectedCountry: "",
     };
   },
+
   mounted() {
+    //executes only one time when is loaded
+    const userChoice = window.localStorage.getItem("selectedCountry");
+    if (userChoice) {
+      //this means if userChoice is something meaningfull
+      this.selectedCountry = userChoice;
+    }
     this.getCountries();
   },
   methods: {

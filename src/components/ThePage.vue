@@ -47,25 +47,8 @@ export default {
     DropDown,
     PopUp,
   },
-  mounted() {
-    //executes only one time when is loaded
-    const userChoice = window.localStorage.getItem("selectedCountry");
-    if (userChoice) {
-      //this means if userChoice is something meaningfull
-      this.selectedCountry = userChoice;
-    }
-    this.getCountries();
-  },
+
   methods: {
-    getCountries() {
-      fetch("https://api.covid19api.com/countries")
-        .then((response) => {
-          return response.json();
-        })
-        .then((result) => {
-          this.countries = result;
-        });
-    },
     resetCountry() {
       this.casesCount = 0;
       this.deathsCount = 0;
