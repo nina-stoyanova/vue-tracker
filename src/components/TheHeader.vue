@@ -11,7 +11,7 @@
         alt="icon"
         src="@/assets/icons/virus.svg"
       />
-      COVID 19 Tracker
+      COVID-19 Tracker
     </div>
     <!-- <h3 class="url">API by covid19api.com</h3> -->
     <span class="url">API by </span>
@@ -27,6 +27,9 @@ export default {
 </script>
 
 <style>
+.container {
+  font-weight: bold;
+}
 .header {
   background-color: #4233b4;
   color: white;

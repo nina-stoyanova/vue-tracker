@@ -5,25 +5,37 @@
       <MainInformation
         title="Cases"
         v-bind:count="casesCount"
-        total=""
         class="main-child"
       ></MainInformation>
       <MainInformation
         title="Deaths"
         v-bind:count="deathsCount"
-        total=""
         class="main-child"
         isDeaths="true"
       ></MainInformation>
     </div>
-    <DropDown @selectedCountry="onSelectedCountry"></DropDown>
+    <DropDown
+      @selectedCountry="onSelectedCountry"
+      @resetCountry="resetCountry"
+    ></DropDown>
+    <PopUp
+      v-bind:show="showPopup"
+      @popupClose="closePopup"
+      message="No data available for this country"
+    ></PopUp>
+    <PopUp
+      v-bind:show="showError"
+      @popupClose="closePopup"
+      message="Server is down"
+    ></PopUp>
+    <!-- v-bind - in order to accept it as varaible, not string -->
   </div>
 </template>
 
 <script>
 import CurrentDate from "./CurrentDate.vue";
 import MainInformation from "./MainInformation.vue";
-
+import PopUp from "./PopUp.vue";
 import DropDown from "./DropDown.vue";
 
 export default {
@@ -33,9 +45,38 @@ export default {
     CurrentDate,
     MainInformation,
     DropDown,
+    PopUp,
+  },
+  mounted() {
+    //executes only one time when is loaded
+    const userChoice = window.localStorage.getItem("selectedCountry");
+    if (userChoice) {
+      //this means if userChoice is something meaningfull
+      this.selectedCountry = userChoice;
+    }
+    this.getCountries();
   },
   methods: {
+    getCountries() {
+      fetch("https://api.covid19api.com/countries")
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          this.countries = result;
+        });
+    },
+    resetCountry() {
+      this.casesCount = 0;
+      this.deathsCount = 0;
+      this.country = "";
+    },
+    closePopup() {
+      this.showPopup = false; //we close the popup by setting showPopup to false
+      this.showError = false;
+    },
     onSelectedCountry(country) {
+      //here we can save the selected country in the localstorage
       this.casesCount = 0;
       this.deathsCount = 0;
       this.country = country;
@@ -45,15 +86,20 @@ export default {
           `https://api.covid19api.com/country/${country}/status/confirmed?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
         )
           .then((response) => {
-            return response.json();
+            return response.json(); //decodding the response for js
           })
           .then((data) => {
             if (data.length === 0) {
               this.casesCount = "n/a";
+              this.showPopup = true;
             } else {
               this.casesCount = data[0].Cases;
               console.log(this.country, this.casesCount);
             }
+          })
+          .catch((error) => {
+            console.log(error);
+            this.showError = true;
           });
 
         fetch(
@@ -65,10 +111,15 @@ export default {
           .then((answer) => {
             if (answer.length === 0) {
               this.deathsCount = "n/a";
+              this.showPopup = true;
             } else {
               this.deathsCount = answer[0].Cases;
               console.log(this.country, this.deathsCount);
             }
+          })
+          .catch((error) => {
+            console.log(error);
+            this.showError = true; //we change this in 10places?
           });
       }
     },
@@ -78,6 +129,8 @@ export default {
       country: "",
       casesCount: 0,
       deathsCount: 0,
+      showPopup: false,
+      showError: false,
     };
   },
 };

@@ -4,7 +4,10 @@
     @change="onChange"
     name="countries"
     id="count"
+    class="drop-down"
   >
+    <!-- v-model - connection between the chosen country and the property
+    selectedCountry -->
     <option
       v-for="country in countries"
       :key="country"
@@ -15,7 +18,7 @@
   </select>
 
   <div class="reset-container">
-    <button @click="onClick" type="button" class="reset-container-btn">
+    <button @click="onReset" type="button" class="reset-container-btn">
       Clear country
     </button>
   </div>
@@ -24,7 +27,7 @@
 <script>
 export default {
   name: "DropDown",
-  emits: ["selectedCountry"],
+  emits: ["selectedCountry", "resetCountry"],
   data: function () {
     return {
       countries: [],
@@ -36,12 +39,12 @@ export default {
   },
   methods: {
     onChange() {
-      //raise event
+      //here we can save the selected country in localstorage
       this.$emit("selectedCountry", this.selectedCountry);
     },
-    onClick() {
+    onReset() {
       this.selectedCountry = "";
-      this.$emit("selectedCountry", this.selectedCountry);
+      this.$emit("resetCountry");
     },
     getCountries() {
       fetch("https://api.covid19api.com/countries")
@@ -58,5 +61,19 @@ export default {
 
 
 <style>
+.drop-down {
+  margin-top: 20px;
+  width: 95%;
+}
+.reset-container {
+  position: relative;
+}
+.reset-container-btn {
+  position: absolute;
+  left: 5px;
+  margin-top: 20px;
+  background-color: #2b7037;
+  color: white;
+}
 /* style hoover btn border box shadow */
 </style>
