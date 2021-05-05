@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <CurrentDate v-bind:country="country"></CurrentDate>
     <div class="main">
       <MainInformation
@@ -120,6 +120,11 @@ export default {
 </script>
 
 <style>
+.container {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .main {
   display: flex;
   justify-content: space-around;

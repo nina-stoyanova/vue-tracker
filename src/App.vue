@@ -18,21 +18,6 @@ export default {
       return new Promise((resolve) => setTimeout(() => resolve(42), 3000));
     },
   },
-
-  //   mounted() {
-  //     //this.getPromise().then(result => console.log(result));
-  //     fetch("https://www.boredapi.com/api/activity")
-  //       .then((httpResponse) => {
-  //         return httpResponse.json();
-  //       })
-  //       .then((body) => {
-  //         console.log(body);
-  //         this.activity = body;
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         //create a popup
-  //       });
 };
 </script>
 
