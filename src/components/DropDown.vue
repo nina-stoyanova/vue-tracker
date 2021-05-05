@@ -47,6 +47,7 @@ export default {
   methods: {
     onChange() {
       //here we can save the selected country in localstorage
+      window.localStorage.setItem("selectedCountry", this.selectedCountry);
       this.$emit("selectedCountry", this.selectedCountry);
     },
     onReset() {
@@ -71,6 +72,7 @@ export default {
 .drop-down {
   margin-top: 20px;
   width: 95%;
+  font-size: 1rem;
 }
 .reset-container {
   position: relative;
@@ -81,6 +83,7 @@ export default {
   margin-top: 20px;
   background-color: #2b7037;
   color: white;
+  font-size: 0.8rem;
 }
 /* style hoover btn border box shadow */
 </style>

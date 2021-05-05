@@ -122,8 +122,19 @@ export default {
 <style>
 .main {
   display: flex;
+  justify-content: space-around;
 }
 .main-child {
-  width: 50%;
+  width: 45%;
+}
+@media only screen and (max-width: 767px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+  .main-child {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }
 </style>

@@ -29,7 +29,7 @@ export default {
 <style>
 .container {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1.5rem;
 }
 .header {
   background-color: #4233b4;

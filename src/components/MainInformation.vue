@@ -16,13 +16,10 @@ export default {
 <style>
 .covid-stats {
   background-color: #cee4ff;
-  margin-right: 30px;
-  margin-left: 30px;
+  box-shadow: 3px 3px 3px 3px #ccc;
 }
 .covid-stats--deaths {
   background-color: #9bc7ff;
-  margin-right: 30px;
-  margin-left: 30px;
 }
 .covid-stats__title {
   font-weight: lighter;
