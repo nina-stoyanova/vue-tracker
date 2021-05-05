@@ -25,7 +25,7 @@ export default {
   margin-left: 30px;
 }
 .covid-stats__title {
-  font-weight: bold;
+  font-weight: lighter;
   color: blue;
   font-size: 1.5rem;
 }
