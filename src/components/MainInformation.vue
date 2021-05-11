@@ -17,6 +17,7 @@ export default {
 .covid-stats {
   background-color: #cee4ff;
   box-shadow: 3px 3px 3px 3px #ccc;
+  padding: 1rem;
 }
 .covid-stats--deaths {
   background-color: #9bc7ff;

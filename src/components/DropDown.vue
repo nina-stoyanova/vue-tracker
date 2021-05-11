@@ -1,11 +1,5 @@
 <template>
-  <select
-    v-model="selectedCountry"
-    @change="onChange"
-    name="countries"
-    id="count"
-    class="drop-down"
-  >
+  <select @change="onChange" name="countries" id="count" class="drop-down">
     <!-- v-model - connection between the chosen country and the property
     selectedCountry -->
     <option
@@ -31,7 +25,7 @@ export default {
   data: function () {
     return {
       countries: [],
-      selectedCountry: "",
+      //selectedCountry: "",
     };
   },
 
@@ -40,18 +34,19 @@ export default {
     const userChoice = window.localStorage.getItem("selectedCountry");
     if (userChoice) {
       //this means if userChoice is something meaningfull
-      this.selectedCountry = userChoice;
+      //this.selectedCountry = userChoice;
     }
     this.getCountries();
   },
   methods: {
-    onChange() {
+    onChange(eventInfo) {
       //here we can save the selected country in localstorage
-      window.localStorage.setItem("selectedCountry", this.selectedCountry);
-      this.$emit("selectedCountry", this.selectedCountry);
+      let selectedCountry = eventInfo.target.value;
+      window.localStorage.setItem("selectedCountry", selectedCountry);
+      this.$emit("selectedCountry", selectedCountry);
     },
     onReset() {
-      this.selectedCountry = "";
+      //this.selectedCountry = "";
       this.$emit("resetCountry");
     },
     getCountries() {
