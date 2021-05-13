@@ -1,23 +1,32 @@
 <template>
-  <div v-if="show" class="backdrop">
-    <div class="popup-container">
-      <img
-        class="exclamation-mark"
-        alt="warning"
-        src="@/assets/icons/warning.svg"
-      />
-      {{ message }}
-      <button @click="onClose" class="popup-container__btn">Close</button>
-    </div>
+  <div :class="{ hidden: true, visible: show }">
+    <img
+      class="exclamation-mark"
+      alt="warning"
+      src="@/assets/icons/warning.svg"
+    />
+    {{ message }}
+    <button @click="onClose" class="popup-container__btn">Close</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "PopUp",
+  data() {
+    return {
+      active: false,
+    };
+  },
   props: ["show", "message"], //this is comming from outside?
   emits: ["popupClose"], //we declare the event with this name
+  mounted() {},
   methods: {
+    changePopUp() {
+      setTimeout(() => {
+        this.active = true; //activate the box
+      }, 3000);
+    },
     onClose() {
       this.$emit("popupClose");
     },
@@ -26,15 +35,16 @@ export default {
 </script>
 
 <style>
-.backdrop {
-  position: fixed;
-  background-color: rgba(211, 211, 211, 0.5);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+.hidden {
+  opacity: 0;
+  transform: translateY(-300px);
+  background-color: blueviolet;
+  transition: opacity 2s;
+  transition: transform 2s;
 }
-.popup-container {
+.visible {
+  opacity: 1;
+  transform: translateY(0);
   background-color: white;
   position: fixed;
   left: 38%;
