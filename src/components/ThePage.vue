@@ -4,12 +4,12 @@
     <div class="main">
       <MainInformation
         title="Cases"
-        v-bind:count="casesCount"
+        v-bind:count="totalNewCases"
         class="main-child"
       ></MainInformation>
       <MainInformation
         title="Deaths"
-        v-bind:count="deathsCount"
+        v-bind:count="totalDeathCases"
         class="main-child"
         isDeaths="true"
       ></MainInformation>
@@ -47,11 +47,30 @@ export default {
     DropDown,
     PopUp,
   },
+  mounted() {
+    // mounted lifecycle hook
+    fetch(`https://api.covid19api.com/summary`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.Countries === []) {
+          this.totalNewCases = "n/a";
+          this.totalDeathCases = "n/a";
+          this.showPopup = true;
+        } else {
+          this.countries = data.Countries;
+        }
+      })
+      .catch(() => {
+        this.showError = true;
+      });
+  },
 
   methods: {
     resetCountry() {
-      this.casesCount = 0;
-      this.deathsCount = 0;
+      this.totalNewCases = 0;
+      this.totalDeathCases = 0;
       this.country = "";
     },
     closePopup() {
@@ -60,58 +79,31 @@ export default {
     },
     onSelectedCountry(country) {
       //here we can save the selected country in the localstorage
-      this.casesCount = 0;
-      this.deathsCount = 0;
+      this.totalNewCases = 0;
+      this.totalDeathCases = 0;
       this.country = country;
       //if country is empty don't do the fetch
       if (this.country !== "") {
-        fetch(
-          `https://api.covid19api.com/country/${country}/status/confirmed?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
-        )
-          .then((response) => {
-            return response.json(); //decodding the response for js
-          })
-          .then((data) => {
-            if (data.length === 0) {
-              this.casesCount = "n/a";
-              this.showPopup = true;
-            } else {
-              this.casesCount = data[0].Cases;
-              console.log(this.country, this.casesCount);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            this.showError = true;
-          });
-
-        fetch(
-          `https://api.covid19api.com/country/${country}/status/deaths?from=2020-03-01T08:00:00Z&to=2020-03-01T09:00:00Z`
-        )
-          .then((response) => {
-            return response.json();
-          })
-          .then((answer) => {
-            if (answer.length === 0) {
-              this.deathsCount = "n/a";
-              this.showPopup = true;
-            } else {
-              this.deathsCount = answer[0].Cases;
-              console.log(this.country, this.deathsCount);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            this.showError = true; //we change this in 10places?
-          });
+        this.countryObject = this.countries.find((object) => {
+          //returns boolean
+          return object.Country.toLowerCase() === this.country.toLowerCase();
+        });
+        if (this.countryObject.Country) {
+          this.totalNewCases = this.countryObject.TotalConfirmed;
+          this.totalDeathCases = this.countryObject.TotalDeaths;
+        } else {
+          //pop up n/a
+        }
       }
     },
   },
   data: function () {
     return {
+      countryObject: {},
+      countries: [],
       country: "",
-      casesCount: 0,
-      deathsCount: 0,
+      totalNewCases: 0,
+      totalDeathCases: 0,
       showPopup: false,
       showError: false,
     };
