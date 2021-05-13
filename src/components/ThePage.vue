@@ -48,19 +48,14 @@ export default {
     PopUp,
   },
   mounted() {
+    // loads when vue attaches the component to the html dom
     // mounted lifecycle hook
     fetch(`https://api.covid19api.com/summary`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        if (data.Countries === []) {
-          this.totalNewCases = "n/a";
-          this.totalDeathCases = "n/a";
-          this.showPopup = true;
-        } else {
-          this.countries = data.Countries;
-        }
+        this.countries = data.Countries;
       })
       .catch(() => {
         this.showError = true;
@@ -82,18 +77,22 @@ export default {
       this.totalNewCases = 0;
       this.totalDeathCases = 0;
       this.country = country;
-      //if country is empty don't do the fetch
+
       if (this.country !== "") {
         this.countryObject = this.countries.find((object) => {
           //returns boolean
           return object.Country.toLowerCase() === this.country.toLowerCase();
         });
-        if (this.countryObject.Country) {
-          this.totalNewCases = this.countryObject.TotalConfirmed;
-          this.totalDeathCases = this.countryObject.TotalDeaths;
-        } else {
-          //pop up n/a
-        }
+      }
+
+      if (this.countryObject) {
+        this.totalNewCases = this.countryObject.TotalConfirmed;
+        this.totalDeathCases = this.countryObject.TotalDeaths;
+      } else {
+        //pop up n/a
+        this.totalNewCases = "n/a";
+        this.totalDeathCases = "n/a";
+        this.showPopup = true;
       }
     },
   },
