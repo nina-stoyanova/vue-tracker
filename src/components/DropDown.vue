@@ -55,7 +55,19 @@ export default {
           return response.json();
         })
         .then((result) => {
-          this.countries = result;
+          let sortedCountries = result.sort((a, b) => {
+            //if we want a to be before b, than return negative number
+            let firstObjectCountryName = a.Country; //Germany
+            let secondObjectCountryName = b.Country; //France
+            if (firstObjectCountryName < secondObjectCountryName) {
+              //if first < second
+              //we want a to be before b
+              return -8;
+            } else {
+              return 8;
+            }
+          });
+          this.countries = sortedCountries;
         });
     },
   },

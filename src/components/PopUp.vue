@@ -37,24 +37,24 @@ export default {
 <style>
 .hidden {
   opacity: 0;
-  transform: translateY(-300px);
-  background-color: blueviolet;
-  transition: opacity 2s;
-  transition: transform 2s;
-}
-.visible {
-  opacity: 1;
-  transform: translateY(0);
-  background-color: white;
+  transition: all 500ms;
   position: fixed;
-  left: 38%;
+  left: 50%;
   top: 45%;
+  width: 300px;
   padding: 2rem;
+  background-color: white;
   color: rgb(209, 56, 56);
   box-shadow: 2px 2px 2px 2px #ccc;
   border: 2px solid black;
   border-radius: 12px;
+  transform: translate(-50%, -300px);
 }
+.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .popup-container__btn {
   position: absolute;
   top: 5px;
@@ -69,5 +69,7 @@ export default {
   position: absolute;
   top: 2px;
   right: 48%;
+}
+@media only screen and (max-width: 767px) {
 }
 </style>

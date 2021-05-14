@@ -1,7 +1,7 @@
 <template>
   <div v-bind:class="{ 'covid-stats--deaths': isDeaths }" class="covid-stats">
     <div class="covid-stats__title">{{ title }}</div>
-    <div class="covid-stats__count">Total: {{ count }}</div>
+    <div class="covid-stats__count">TotalNew: {{ count }}</div>
   </div>
 </template>
 

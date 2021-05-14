@@ -55,7 +55,7 @@ export default {
         return response.json();
       })
       .then((data) => {
-        this.countries = data.Countries;
+        this.country = data.Country;
       })
       .catch(() => {
         this.showError = true;
